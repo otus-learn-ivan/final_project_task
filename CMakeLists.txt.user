@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 6.0.2, 2024-10-03T08:43:43. -->
+<!-- Written by QtCreator 6.0.2, 2024-10-07T14:39:00. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -74,6 +74,12 @@
     <value type="Qt::CheckState" key="1@/home/otuslearn/12_homework/dispersion/test_dispersion.cpp:test_dispersion">Checked</value>
     <value type="Qt::CheckState" key="1@/home/otuslearn/12_homework/dispersion/test_dispersion.cpp:test_test_ds">Checked</value>
     <value type="Qt::CheckState" key="1@/home/otuslearn/12_homework/dispersion/test_dispersion.cpp:test_valid">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/otuslearn/final_task/final_project_task/average/test_average.cpp:test_average">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/otuslearn/final_task/final_project_task/average/test_average.cpp:test_test_av">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/otuslearn/final_task/final_project_task/average/test_average.cpp:test_valid">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/otuslearn/final_task/final_project_task/dispersion/test_dispersion.cpp:test_dispersion">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/otuslearn/final_task/final_project_task/dispersion/test_dispersion.cpp:test_test_ds">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/otuslearn/final_task/final_project_task/dispersion/test_dispersion.cpp:test_valid">Checked</value>
    </valuemap>
    <value type="int" key="AutoTest.RunAfterBuild">0</value>
    <value type="bool" key="AutoTest.UseGlobal">true</value>
