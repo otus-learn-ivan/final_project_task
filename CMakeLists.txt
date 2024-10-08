@@ -3,13 +3,14 @@ cmake_minimum_required(VERSION 3.10)
 set(PATCH_VERSION "2" CACHE INTERNAL "Patch version")
 set(PROJECT_VESRION 0.1.${PATCH_VERSION})
 
-project(mapper_reducer_prg VERSION ${PROJECT_VESRION})
+project(data_base_cosem_prg VERSION ${PROJECT_VESRION})
 
 find_package(Boost COMPONENTS unit_test_framework thread REQUIRED)
 #find_package(Boost REQUIRED json)
 include_directories(${Boost_INCLUDE_DIRS})
 
 
+add_library(data_base_cosem STATIC data_base/data_base.cpp)
 
 #lboost_system
 # Библиотека libasync
@@ -29,7 +30,11 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 #add_executable(test_bulk test_bulk.cpp)
 
+add_executable(using_databse using_databse.cpp)
+
+
 add_executable(mapper_av average/mapper.cpp produser_consumer.h mapper_all.h)
+
 add_executable(mapper_ds dispersion/mapper.cpp produser_consumer.h mapper_all.h)
 add_executable(reducer_av average/reducer.cpp)
 add_executable(reducer_ds dispersion/reducer.cpp)
@@ -45,6 +50,13 @@ set_target_properties( mapper_av mapper_ds reducer_av reducer_ds test_average te
 #target_include_directories(bulk_prg
 #    PRIVATE "${CMAKE_BINARY_DIR}"
 #)
+
+
+target_link_libraries(using_databse
+    ${Boost_LIBRARIES}
+)
+
+
 
 target_link_libraries(mapper_av
     ${Boost_LIBRARIES}
@@ -104,7 +116,9 @@ else ()
 #    target_compile_options(test_bulk PRIVATE
 #        -Wall -Wextra -pedantic -Werror
 #    )
-    target_compile_options(mapper_av PRIVATE
+
+
+    target_compile_options(using_databse PRIVATE
        # -Wall -Wextra -pedantic #-Werror
     )
     target_compile_options(mapper_ds PRIVATE
@@ -127,7 +141,7 @@ endif()
 
 
 
-#install(TARGETS bulk_server RUNTIME DESTINATION bin)
+install(TARGETS using_databse RUNTIME DESTINATION bin)
 install(TARGETS mapper_av RUNTIME DESTINATION bin)
 install(TARGETS mapper_ds RUNTIME DESTINATION bin)
 install(TARGETS reducer_av RUNTIME DESTINATION bin)
