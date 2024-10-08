@@ -2,6 +2,7 @@
 #include <string>
 #include "../produser_consumer.h"
 #include "../mapper_all.h"
+#include <boost/property_tree/json_parser.hpp>
 
 struct Thandler_mapper_awerage{
   size_t number_of_numbers;

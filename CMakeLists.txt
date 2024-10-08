@@ -5,7 +5,12 @@ set(PROJECT_VESRION 0.1.${PATCH_VERSION})
 
 project(mapper_reducer_prg VERSION ${PROJECT_VESRION})
 
-find_package(Boost COMPONENTS unit_test_framework  thread REQUIRED)
+find_package(Boost COMPONENTS unit_test_framework thread REQUIRED)
+#find_package(Boost REQUIRED json)
+include_directories(${Boost_INCLUDE_DIRS})
+
+
+
 #lboost_system
 # Библиотека libasync
 #add_library(async SHARED libasync/async.cpp)
