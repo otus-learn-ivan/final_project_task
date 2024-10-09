@@ -9,8 +9,14 @@ find_package(Boost COMPONENTS unit_test_framework thread REQUIRED)
 #find_package(Boost REQUIRED json)
 include_directories(${Boost_INCLUDE_DIRS})
 
+aux_source_directory(gurux/development/src SRC_FILES)
+aux_source_directory(gurux/development/include INCLUDE_FILES)
+
+add_library(GuruxDLMS STATIC ${SRC_FILES} ${INCLUDE_FILES})
 
 add_library(data_base_cosem STATIC data_base/data_base.cpp)
+
+include_directories( "${PROJECT_SOURCE_DIR}/gurux/development/include" )
 
 #lboost_system
 # Библиотека libasync
@@ -32,6 +38,7 @@ add_library(data_base_cosem STATIC data_base/data_base.cpp)
 
 add_executable(using_databse using_databse.cpp)
 
+target_link_libraries(using_databse data_base_cosem GuruxDLMS)
 
 add_executable(mapper_av average/mapper.cpp produser_consumer.h mapper_all.h)
 

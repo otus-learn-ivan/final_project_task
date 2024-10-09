@@ -14,9 +14,9 @@ namespace database_cosem {
         std::string path_to_DB;
         std::vector<std::string> path_to_dir_pu;
     public:
-        DB(std::string& path):path_to_DB(path){}
+        DB(std::string path):path_to_DB(path),path_to_dir_pu{}{}
         Database_cosem_Error open_database();// путь к катологу database
-        Database_cosem_Error add_PU(std::string number_pu); // добавляет католог счетчика в базу
+        //Database_cosem_Error add_PU(std::string number_pu); // добавляет католог счетчика в базу
         //std::unique_ptr<DB> create_DB(path);
     };
 

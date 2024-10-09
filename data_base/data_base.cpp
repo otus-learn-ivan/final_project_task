@@ -1,7 +1,10 @@
 
 #include "../database_cosem.h"
 #include <dirent.h>
-
+#include <sys/stat.h>
+#include <string>
+#include <iostream>
+#include <algorithm>
 namespace database_cosem {
 
 
@@ -9,7 +12,7 @@ namespace database_cosem {
 Database_cosem_Error DB::open_database(){
     DIR *dir;
        struct dirent *ent;
-       dir = opendir(this->path_to_DB); // "." - текущая директория
+       dir = opendir(this->path_to_DB.c_str()); // "." - текущая директория
        std::vector<std::string> ;
 
        if (dir != nullptr) {
@@ -26,6 +29,7 @@ Database_cosem_Error DB::open_database(){
             return Database_cosem_Error::DATABASE_COSEM_NOT_OPEN;
        }
        std::sort(this->path_to_dir_pu.begin(),this->path_to_dir_pu.end());
+    }
     return Database_cosem_Error::DATABASE_COSEM_OK;
 }
 
