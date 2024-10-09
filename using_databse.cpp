@@ -3,12 +3,14 @@
 //int main(int argc, char ** argv){
 #include <iostream>
 #include "database_cosem.h"
+#if 0
 #include <GXDLMS.h>
 #include <GXDLMSData.h>
 #include <GXDLMSVariant.h>
 #include <GXDLMSSettings.h>
 #include <GXDLMSValueEventArg.h>
 #include <GXBytebuffer.h>
+#endif
 int main(){
     database_cosem::DB db_counters("Test_counters_base");
 //    db_counters.open_database();
@@ -31,6 +33,7 @@ int main(){
 
 //    std::cout << x.GetSize() << std::endl;
 
+#if 0
     std::string dlmsTime_str = "090C07E80A0802090B2D1EFE9834";
 
     const unsigned char dlmsTime_ch[] = {25,0x07,0xE8,0x0A,0x08,0x02,0x09,0x0B,0x2D,0x1E,0xFE,0x98,0x34,0x00};
@@ -59,6 +62,7 @@ int main(){
     CGXDLMSVariant xT = dataTime.GetValue(settings1,e1);
     std::cout << xT.GetSize() << std::endl;
 
+#endif
 
     //data
 }

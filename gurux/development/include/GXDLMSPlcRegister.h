@@ -36,7 +36,7 @@
 #define GXDLMSPLCREGISTER_H
 
 #include "enums.h"
-
+#include <cstdint>
 class CGXDLMSPlcRegister
 {
 private:

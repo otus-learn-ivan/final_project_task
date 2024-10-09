@@ -14,7 +14,7 @@ aux_source_directory(gurux/development/include INCLUDE_FILES)
 
 add_library(GuruxDLMS STATIC ${SRC_FILES} ${INCLUDE_FILES})
 
-add_library(data_base_cosem STATIC data_base/data_base.cpp)
+add_library(data_base_cosem STATIC data_base/data_base.cpp server/server.cpp)
 
 include_directories( "${PROJECT_SOURCE_DIR}/gurux/development/include" )
 

@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include <vector>
 namespace database_cosem {
 
 
@@ -13,7 +14,7 @@ Database_cosem_Error DB::open_database(){
     DIR *dir;
        struct dirent *ent;
        dir = opendir(this->path_to_DB.c_str()); // "." - текущая директория
-       std::vector<std::string> ;
+       //std::vector<std::string> ;
 
        if (dir != nullptr) {
            while ((ent = readdir(dir)) != nullptr) {
