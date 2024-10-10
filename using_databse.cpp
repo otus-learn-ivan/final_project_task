@@ -3,7 +3,7 @@
 //int main(int argc, char ** argv){
 #include <iostream>
 #include "database_cosem.h"
-#if 0
+#if 1
 #include <GXDLMS.h>
 #include <GXDLMSData.h>
 #include <GXDLMSVariant.h>
@@ -33,7 +33,7 @@ int main(){
 
 //    std::cout << x.GetSize() << std::endl;
 
-#if 0
+#if 1
     std::string dlmsTime_str = "090C07E80A0802090B2D1EFE9834";
 
     const unsigned char dlmsTime_ch[] = {25,0x07,0xE8,0x0A,0x08,0x02,0x09,0x0B,0x2D,0x1E,0xFE,0x98,0x34,0x00};
