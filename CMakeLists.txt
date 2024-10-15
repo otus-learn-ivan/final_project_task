@@ -5,7 +5,7 @@ set(PROJECT_VESRION 0.1.${PATCH_VERSION})
 
 project(data_base_cosem_prg VERSION ${PROJECT_VESRION})
 
-find_package(Boost COMPONENTS unit_test_framework thread REQUIRED)
+find_package(Boost COMPONENTS unit_test_framework thread filesystem REQUIRED)
 #find_package(Boost REQUIRED json)
 include_directories(${Boost_INCLUDE_DIRS})
 
@@ -14,7 +14,8 @@ aux_source_directory(gurux/development/include INCLUDE_FILES)
 
 add_library(GuruxDLMS STATIC ${SRC_FILES} ${INCLUDE_FILES})
 
-add_library(data_base_cosem STATIC data_base/data_base.cpp server/server.cpp)
+add_library(data_base_cosem STATIC data_base/data_base.cpp server/server.cpp
+    database_cosem.h)
 
 include_directories( "${PROJECT_SOURCE_DIR}/gurux/development/include" )
 

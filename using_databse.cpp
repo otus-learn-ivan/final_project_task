@@ -13,27 +13,34 @@
 #endif
 int main(){
     database_cosem::DB db_counters("Test_counters_base");
-//    db_counters.open_database();
     if(db_counters.open_database()!=database_cosem::Database_cosem_Error::DATABASE_COSEM_OK){
         std::cout << "База не создана\n\r";
         return 1;
     }
+    // db_counters.print_passport_DB_log();
 
-//    std::string dlmsData = "01 09 02 07 09 0C 07 E8 0A 08 02 09 0B 2D 1E FE 98 34 09 08 30 30 31 39 37 31 32 31 11 04 11 05 06 09 08 07 06 10 05 04 0F AA 02 07 09 0C 07 E8 0A 08 02 09 0B 2D 1E FE 98 34 09 08 30 30 31 39 37 31 32 31 11 04 11 05 06 09 08 07 06 10 05 04 0F AA 02 07 09 0C 07 E8 0A 08 02 09 0D 02 1A FE 98 34 09 08 30 30 30 30 30 33 33 37 11 04 11 05 06 09 08 07 06 10 05 04 0F AA 02 07 09 0C 07 E8 0A 08 02 09 0D 02 1A FE 98 34 09 08 30 30 30 30 30 33 33 37 11 04 11 05 06 09 08 07 06 10 05 04 0F AA 02 07 09 0C 07 E8 0A 08 02 09 0D 02 1A FE 98 34 09 08 30 30 30 30 30 33 33 37 11 04 11 05 06 09 08 07 06 10 05 04 0F AA 02 07 09 0C 07 E8 0A 08 02 09 37 3A 19 FE 98 34 09 08 30 30 30 30 30 33 33 38 11 04 11 05 06 09 08 07 06 10 05 04 0F AA 02 07 09 0C 07 E8 0A 08 02 09 37 3A 19 FE 98 34 09 08 30 30 30 30 30 33 33 38 11 04 11 05 06 09 08 07 06 10 05 04 0F AA 02 07 09 0C 07 E8 0A 08 02 09 37 3A 19 FE 98 34 09 08 30 30 30 30 30 33 33 38 11 04 11 05 06 09 08 07 06 10 05 04 0F AA";
-//    CGXDLMSData data(dlmsData);
-//    std::cout << data.GetAttributeCount() << std::endl;
-//    //GXDLMSData
-//    //data.GetDescription()
+    db_counters.add_elem_DB("456798798744431");
+    db_counters.print_passport_DB_log();
+    db_counters.add_elem_DB("456798798744431");
+    db_counters.add_elem_DB("456798798744432");
+    db_counters.add_elem_DB("456798798744433");
+    db_counters.add_elem_DB("456798798744434");
 
-//    CGXDLMSSettings settings(false);
-//    CGXDLMSValueEventArg e(nullptr,0);
+    // std::cout <<  db_counters.get_list_elems_DB();
 
+    db_counters.delete_elem_DB("456798798744431");
+    // db_counters.delete_elem_DB("456798798744431");
+    db_counters.delete_elem_DB("456798798744432");
+    // db_counters.delete_elem_DB("456798798744433");
+    // db_counters.delete_elem_DB("456798798744434");
 
-//    CGXDLMSVariant x = data.GetValue(settings,e);
+     std::cout <<  db_counters.get_list_elems_DB();
 
-//    std::cout << x.GetSize() << std::endl;
+     db_counters.get_elem_in_DB("456798798744434").create_table_elem_DB("tabklpckev;k");
 
-#if 1
+     db_counters.get_elem_in_DB("_456798798744434").create_table_elem_DB("tabklpckev;k");
+
+#if 0
     std::string dlmsTime_str = "090C07E80A0802090B2D1EFE9834";
 
     const unsigned char dlmsTime_ch[] = {25,0x07,0xE8,0x0A,0x08,0x02,0x09,0x0B,0x2D,0x1E,0xFE,0x98,0x34,0x00};
