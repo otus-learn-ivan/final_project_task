@@ -5,7 +5,7 @@ set(PROJECT_VESRION 0.1.${PATCH_VERSION})
 
 project(data_base_cosem_prg VERSION ${PROJECT_VESRION})
 
-find_package(Boost COMPONENTS unit_test_framework thread filesystem REQUIRED)
+find_package(Boost COMPONENTS unit_test_framework thread filesystem json REQUIRED)
 #find_package(Boost REQUIRED json)
 include_directories(${Boost_INCLUDE_DIRS})
 

@@ -84,21 +84,127 @@ Database_cosem_Error DB::delete_DB(){
     }
     return DATABASE_COSEM_OK;
 }
+struct Tin_out_direct
+{
+    boost::filesystem::path old_path;
+    Tin_out_direct(std::string next_direct):old_path(boost::filesystem::current_path()) {
+        boost::filesystem::current_path(next_direct.c_str());
+    }
+    ~Tin_out_direct(){
+        boost::filesystem::current_path(old_path);
+    }
+};
 
 Database_cosem_Error Telem_DB::create_table_elem_DB(std::string name_table){ // создание отдельной таблици(файла) элемента
-    boost::filesystem::path file_path = name_elem + "\\" + name_table + ".tdl" ;
-    std::cout <<"create_table_elem_DB " << file_path.string() << "\n";
+    boost::filesystem::path file_path = name_table + ".tbl" ;
+    std::cout <<"create_table_elem_DB "  << name_elem.c_str() << " \\ " << file_path.string() << "\n";
     try {
-      // Создаем файл, если он не существует
-      if (!boost::filesystem::exists(file_path)) {
-        std::ofstream file(file_path.string());
-      }
+        Tin_out_direct go_to_dir {name_elem};
+        //std::cout << "Создаем файл, если он не существует\n";
+        if (!boost::filesystem::exists(file_path)) {
+          std::ofstream (file_path.string());
+        }
     } catch (const std::exception& ex) {
-      std::cerr << "Ошибка создания файла: " << ex.what() << std::endl;
+      std::cerr << "ERROR Ошибка создания файла: " << ex.what() << std::endl;
       return DATABASE_COSEM_TBL_ELEM_NOT_CREAT;
     }
     return DATABASE_COSEM_OK;
 }
+
+Database_cosem_Error Telem_DB::delete_table_elem_DB(std::string name_table){ // удаление отдельной таблици(файла) элемента
+    boost::filesystem::path file_path = name_table + ".tbl" ;
+    std::cout <<"create_table_elem_DB "  << name_elem.c_str() << " \\ " << file_path.string() << "\n";
+    try {
+        Tin_out_direct go_to_dir {name_elem};
+        if (boost::filesystem::exists(file_path)) {
+          std::cout << "Удаляем файл, если он не существует\n";
+          boost::filesystem::remove (file_path.string());
+        }
+    } catch (const std::exception& ex) {
+      std::cerr << "ERROR Ошибка удаления файла: " << ex.what() << std::endl;
+      return DATABASE_COSEM_TBL_ELEM_NOT_CREAT;
+    }
+    return DATABASE_COSEM_OK;
+}
+
+#include <fstream>
+Database_cosem_Error Telem_DB::add_record_to_table_elem_DB(std::string name_table,std::string record){ // удаление отдельной таблици(файла) элемента
+    boost::filesystem::path file_path = name_table + ".tbl" ;
+    std::cout <<"add_record_to_table_elem_DB "  << name_elem.c_str() << " \\ " << file_path.string() << "\n";
+    try {
+        Tin_out_direct go_to_dir {name_elem};
+        if (boost::filesystem::exists(file_path)) {
+          std::ofstream file_(file_path,std::ios::app);
+          if(file_.is_open()){
+              file_ << record<<"\n";
+              file_.close();
+          }
+        }
+    } catch (const std::exception& ex) {
+      std::cerr << "ERROR add_record_to_table_elem_DB: " << ex.what() << std::endl;
+      return DATABASE_COSEM_TBL_ELEM_NOT_CREAT;
+    }
+    return DATABASE_COSEM_OK;
+}
+
+//#include <boost/interprocess/file_mapping.hpp>
+//#include <boost/interprocess/mapped_region.hpp>
+struct Test_record_for_get{
+    std::string& descriptor_request;
+    std::string& name_table;
+    std::vector<std::string>& out;
+    Test_record_for_get (std::string& descriptor_r,std::string& name_t, std::vector<std::string>& out_v):
+        descriptor_request(descriptor_r),name_table(name_t),out(out_v){};
+    void operator()(std::string& line){
+        if(descriptor_request==""){
+             out.push_back(line);
+            return;
+        }
+
+        boost::json::value j = boost::json::parse(descriptor_request);
+        std::string name = std::string(j.at("name_colon").get_string());
+        std::string type_ =std::string(j.at("type_colon").get_string());
+
+        auto val = TvalueFactorySelector().createValue(type_,boost::json::parse(line).at(name));
+        auto upper = TvalueFactorySelector().createValue(type_,j.at("upper"));
+        auto lover = TvalueFactorySelector().createValue(type_,j.at("lower"));
+
+        if(*upper == *lover){
+            if(*val == *upper){
+                out.push_back(line);
+            }
+        }else if( (*lover < *val) && (*val< *upper)){
+            out.push_back(line);
+        }
+    }
+};
+
+std::vector<std::string> Telem_DB::get_record_from_table_elem_DB(std::string name_table,std::string descriptor_request){ // удаление отдельной таблици(файла) элемента
+     boost::filesystem::path file_path = name_table + ".tbl" ;
+     std::cout <<"get_record_from_table_elem_DB "  << name_elem.c_str() << " \\ " << file_path.string() << "\n";
+     try {
+         Tin_out_direct go_to_dir {name_elem};
+         if (boost::filesystem::exists(file_path)) {
+             std::ifstream inputFile(file_path);
+             if (!inputFile.is_open()) {
+                 return std::vector<std::string>{};
+             }
+             std::string line;
+             std::vector<std::string> out;
+             while (std::getline(inputFile, line)) {
+                Test_record_for_get(descriptor_request,name_table,out)(line);// out.push_back(line);
+             }
+             return out;
+         }
+     } catch (const std::exception& ex) {
+       std::cerr << "ERROR add_record_to_table_elem_DB: " << ex.what() << std::endl;
+       return std::vector<std::string>{};// DATABASE_COSEM_TBL_ELEM_NOT_CREAT;
+     }
+    // return DATABASE_COSEM_OK;
+    return std::vector<std::string>{};
+}
+
+//--------------------------------------------
 
 
 }

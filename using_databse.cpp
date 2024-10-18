@@ -11,6 +11,12 @@
 #include <GXDLMSValueEventArg.h>
 #include <GXBytebuffer.h>
 #endif
+
+#include <boost/json.hpp>
+
+
+
+
 int main(){
     database_cosem::DB db_counters("Test_counters_base");
     if(db_counters.open_database()!=database_cosem::Database_cosem_Error::DATABASE_COSEM_OK){
@@ -19,26 +25,52 @@ int main(){
     }
     // db_counters.print_passport_DB_log();
 
-    db_counters.add_elem_DB("456798798744431");
-    db_counters.print_passport_DB_log();
-    db_counters.add_elem_DB("456798798744431");
-    db_counters.add_elem_DB("456798798744432");
-    db_counters.add_elem_DB("456798798744433");
-    db_counters.add_elem_DB("456798798744434");
+//     db_counters.add_elem_DB("456798798744431");
+// //    db_counters.print_passport_DB_log();
+//     db_counters.add_elem_DB("456798798744431");
+//     db_counters.add_elem_DB("456798798744432");
+//     db_counters.add_elem_DB("456798798744433");
+//     db_counters.add_elem_DB("456798798744434");
 
-    // std::cout <<  db_counters.get_list_elems_DB();
+//     // std::cout <<  db_counters.get_list_elems_DB();
 
-    db_counters.delete_elem_DB("456798798744431");
-    // db_counters.delete_elem_DB("456798798744431");
-    db_counters.delete_elem_DB("456798798744432");
-    // db_counters.delete_elem_DB("456798798744433");
-    // db_counters.delete_elem_DB("456798798744434");
+//     db_counters.delete_elem_DB("456798798744431");
+//     // db_counters.delete_elem_DB("456798798744431");
+//     db_counters.delete_elem_DB("456798798744432");
+//     // db_counters.delete_elem_DB("456798798744433");
+//     // db_counters.delete_elem_DB("456798798744434");
 
      std::cout <<  db_counters.get_list_elems_DB();
 
-     db_counters.get_elem_in_DB("456798798744434").create_table_elem_DB("tabklpckev;k");
+     // db_counters.get_elem_in_DB("456798798744433").create_table_elem_DB("0.0.98.1.0.255");
+     // db_counters.get_elem_in_DB("456798798744434").create_table_elem_DB("0.0.98.1.0.255");
 
-     db_counters.get_elem_in_DB("_456798798744434").create_table_elem_DB("tabklpckev;k");
+     // Trecord_to_tbl_counter_hour record1 = {"2023-10-26 12:00:00", 10.5, 12.3, 5.2, 7.8};
+     // Trecord_to_tbl_counter_hour record2 = {"2023-10-26 13:00:00", 10.6, 12.3, 5.2, 7.8};
+     // Trecord_to_tbl_counter_hour record3 = {"2023-10-26 14:00:00", 10.7, 12.3, 5.2, 7.8};
+
+
+     // db_counters.get_elem_in_DB("456798798744434").add_record_to_table_elem_DB("0.0.98.1.0.255",record1.to_json());
+     // db_counters.get_elem_in_DB("456798798744434").add_record_to_table_elem_DB("0.0.98.1.0.255",record2.to_json());
+     // db_counters.get_elem_in_DB("456798798744434").add_record_to_table_elem_DB("0.0.98.1.0.255",record3.to_json());
+
+     Tdescriptor_request<double> request = {"Ap","double",10.7,10.4};
+     auto v_ansver = db_counters.get_elem_in_DB("456798798744434").get_record_from_table_elem_DB("0.0.98.1.0.255",request.to_json());
+
+     for(const auto& str:v_ansver){
+         std::cout << str << "\n";
+     }
+    Ttable_description hour{
+        "0.0.98.0.1.255",
+        4,
+        {"double","double","double","double"}
+    };
+    db_counters.get_elem_in_DB("456798798744433").add_record_to_table_elem_DB("0.0.98.1.0.255",hour.to_json());
+     // db_counters.get_elem_in_DB("456798798744433").delete_table_elem_DB("0.0.98.1.0.255");
+     // db_counters.get_elem_in_DB("456798798744434").delete_table_elem_DB("0.0.98.1.0.255");
+     // db_counters.get_elem_in_DB("_456798798744434").delete_table_elem_DB("tabklpckev;k");
+     // db_counters.get_elem_in_DB("456798798744434").delete_table_elem_DB("tabklpckev;k");
+
 
 #if 0
     std::string dlmsTime_str = "090C07E80A0802090B2D1EFE9834";
