@@ -190,6 +190,7 @@ namespace database_cosem {
                               DATABASE_COSEM_TBL_ELEM_NOT_CREAT =3,
                               DATABASE_COSEM_ELEM_NOT_DELETE =4,
                              };
+    std::string Database_cosem_Error_to_str(Database_cosem_Error err);
     struct Telem_DB{
         std::string name_elem;
         //Telem_DB():name_elem(""){}

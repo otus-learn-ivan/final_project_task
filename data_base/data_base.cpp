@@ -206,6 +206,18 @@ std::vector<std::string> Telem_DB::get_record_from_table_elem_DB(std::string nam
 
 //--------------------------------------------
 
+std::map <Database_cosem_Error,std::string> error_to_str{
+    {DATABASE_COSEM_OK,"DATABASE_COSEM_OK"},
+    {DATABASE_COSEM_NOT_OPEN,"DATABASE_COSEM_NOT_OPEN"},
+    {DATABASE_COSEM_ELEM_NOT_CREAT,"DATABASE_COSEM_ELEM_NOT_CREAT"},
+    {DATABASE_COSEM_TBL_ELEM_NOT_CREAT,"DATABASE_COSEM_TBL_ELEM_NOT_CREAT"},
+    {DATABASE_COSEM_ELEM_NOT_DELETE,"DATABASE_COSEM_ELEM_NOT_DELETE"}
+};
+
+std::string Database_cosem_Error_to_str(Database_cosem_Error err){
+    return error_to_str[err];
+}
+
 
 }
 

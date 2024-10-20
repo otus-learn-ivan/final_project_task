@@ -127,7 +127,7 @@ else ()
 
 
     target_compile_options(using_databse PRIVATE
-       # -Wall -Wextra -pedantic #-Werror
+       -std=c++20 # -Wall -Wextra -pedantic #-Werror
     )
     target_compile_options(mapper_ds PRIVATE
         -Wall -Wextra -pedantic -Werror
