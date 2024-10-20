@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 13.0.2, 2024-10-20T13:20:17. -->
+<!-- Written by QtCreator 13.0.2, 2024-10-20T16:05:49. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -547,6 +547,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.using_databse</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">using_databse</value>
     <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>
+    <value type="QString" key="RunConfiguration.Arguments">9000</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>

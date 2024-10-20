@@ -133,31 +133,34 @@ std::vector<std::string>  str_to_vector(std::string cmd){
     }
     return out_vector;
 }
+std::string parser_db_command(std::string cmd){
+    std::cout << cmd << std::endl;
+    auto vk_str = str_to_vector(cmd);
+    return Comands.at(vk_str[0])(std::span<std::string> {vk_str.begin()+1,vk_str.end()});
+}
 
-int main(){
-
-
+extern int main_client_server(const unsigned short g_port_num_);
+int main(int argc, char* argv[]){
+    if(argc == 1){return 0;}
+    std::cout << "Hello world " << argv[1] << " " <<std::endl;
+    main_client_server(atoi(argv[1]));
+#if 0
     std::stringstream  request;
 
     Tdescriptor_request<double> request_get_record = {"Ap","double",10.7,10.4};
 
     request << "Get_record_from_table_PU " << "Test_counters_base " << "456798798744434 "
             << "0.0.98.1.0.255 " << request_get_record.to_json()<<std::endl;
-
-   std::cout << "1: " << request.str() <<std::endl;
+    //std::cout << "1: " << request.str() <<std::endl;
+    auto answer = parser_join(request.str());
+    std::cout << answer << "\n";
+#endif
+#if 0
 
     auto comm = str_to_vector(request.str());
-
-    std::span<std::string> coom_sp{comm.begin()+1,comm.end()};
-
-//    auto answer = Comands[comm[0]](coom_sp);
-
     auto answer = Comands[comm[0]](std::span<std::string> {comm.begin()+1,comm.end()});
-
     std::cout << answer << "\n";
-
-    request.str("");
-    request.clear();
+#endif
 #if 0
 
     std::cout << "11 " << request.str() <<std::endl;

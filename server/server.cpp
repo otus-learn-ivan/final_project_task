@@ -66,7 +66,7 @@ void send_auth() {
     std::cout << "send_auth end\n";
 }
 
-extern void parser_bulk(std::string cmd);
+extern std::string parser_db_command(std::string cmd);
 
 using namespace tp_network;
 
@@ -101,14 +101,14 @@ public:
         // We have data and now we can
         // do some authorization.
 
-        parser_bulk( connection->data);
+        connection->data = parser_db_command(connection->data);;
 
         // ...
         //connection->data = "OK\n";
         // ...
 
         // Now we have response in `connection->data` and it's time to send it.
-        //async_write_data(std::move(connection), &authorizer::on_datasend);
+        async_write_data(std::move(connection), &authorizer::on_datasend);
     }
 
     static void on_datasend(connection_ptr&& connection, const boost::system::error_code& error) {
@@ -141,7 +141,7 @@ struct Tserver_start{
         tp_network::tasks_processor::add_listener(g_port_num, &authorizer::on_connection_accpet);
         assert(!g_authed);
         tp_network::tasks_processor::start();
-        parser_bulk("");
+        //parser_bulk("");
         //assert(g_authed);
     }
 };
