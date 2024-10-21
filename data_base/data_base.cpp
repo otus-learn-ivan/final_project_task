@@ -147,8 +147,6 @@ Database_cosem_Error Telem_DB::add_record_to_table_elem_DB(std::string name_tabl
     return DATABASE_COSEM_OK;
 }
 
-//#include <boost/interprocess/file_mapping.hpp>
-//#include <boost/interprocess/mapped_region.hpp>
 struct Test_record_for_get{
     std::string& descriptor_request;
     std::string& name_table;
@@ -173,7 +171,7 @@ struct Test_record_for_get{
             if(*val == *upper){
                 out.push_back(line);
             }
-        }else if( (*lover < *val) && (*val< *upper)){
+        }else if( ((*lover < *val) && (*val< *upper))|| (*lover == *val)||(*upper == *val)){
             out.push_back(line);
         }
     }

@@ -14,6 +14,7 @@
 
 #include <string>
 #include <boost/json.hpp>
+#include <boost/version.hpp>
 #include <sstream>
 #include<span>
 
@@ -142,7 +143,7 @@ std::string parser_db_command(std::string cmd){
 extern int main_client_server(const unsigned short g_port_num_);
 int main(int argc, char* argv[]){
     if(argc == 1){return 0;}
-    std::cout << "Hello world " << argv[1] << " " <<std::endl;
+    std::cout << "open port: " << argv[1] << " " <<std::endl;
     main_client_server(atoi(argv[1]));
 #if 0
     std::stringstream  request;
