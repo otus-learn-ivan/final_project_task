@@ -133,16 +133,13 @@ std::vector<std::string>  str_to_vector(std::string cmd_in){
     size_t pos = cmd_in.find_first_of('{');
     std::string cmd = (pos != std::string::npos)?cmd_in.substr(0, pos):cmd_in;
     boost::trim_right(cmd);
-    std::cout << cmd <<"!\n";
     std::vector<std::string> out_vector;
     std::istringstream iss(cmd);
     while(iss){
         std::string s;
         iss >> s;
-        std::cout << s <<"!\n";
         if(!s.empty())out_vector.push_back(s);
     }
-    std::cout << out_vector.size() <<"!\n";
     if(pos != std::string::npos){
         out_vector.push_back(cmd_in.substr(pos));
     }
@@ -158,15 +155,13 @@ std::string parser_db_command(std::string cmd){
 extern int main_client_server(const unsigned short g_port_num_);
 int main(int argc, char* argv[]){
 
-#if 0
+#if 1
     if(argc == 1){return 0;}
     std::cout << "open port: " << argv[1] << " " <<std::endl;
     main_client_server(atoi(argv[1]));
 #endif
 
-#if 1
-
-
+#if 0
     std::stringstream  request;
 
     //Tdescriptor_request<double> request_get_record = {"Ap","double",10.7,10.4};
