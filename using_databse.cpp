@@ -17,6 +17,7 @@
 #include <boost/version.hpp>
 #include <sstream>
 #include<span>
+#include <boost/algorithm/string.hpp>
 
 struct Create_DB{
     std::string operator()(std::span<std::string> name_base){
@@ -124,16 +125,30 @@ struct Trequest_to_PU{
        return boost::json::serialize(j);
    }
 };
-std::vector<std::string>  str_to_vector(std::string cmd){
+
+
+
+
+std::vector<std::string>  str_to_vector(std::string cmd_in){
+    size_t pos = cmd_in.find_first_of('{');
+    std::string cmd = (pos != std::string::npos)?cmd_in.substr(0, pos):cmd_in;
+    boost::trim_right(cmd);
+    std::cout << cmd <<"!\n";
     std::vector<std::string> out_vector;
     std::istringstream iss(cmd);
     while(iss){
         std::string s;
         iss >> s;
-        out_vector.push_back(s);
+        std::cout << s <<"!\n";
+        if(!s.empty())out_vector.push_back(s);
+    }
+    std::cout << out_vector.size() <<"!\n";
+    if(pos != std::string::npos){
+        out_vector.push_back(cmd_in.substr(pos));
     }
     return out_vector;
 }
+
 std::string parser_db_command(std::string cmd){
     std::cout << cmd << std::endl;
     auto vk_str = str_to_vector(cmd);
@@ -142,18 +157,25 @@ std::string parser_db_command(std::string cmd){
 
 extern int main_client_server(const unsigned short g_port_num_);
 int main(int argc, char* argv[]){
+
+#if 0
     if(argc == 1){return 0;}
     std::cout << "open port: " << argv[1] << " " <<std::endl;
     main_client_server(atoi(argv[1]));
-#if 0
+#endif
+
+#if 1
+
+
     std::stringstream  request;
 
-    Tdescriptor_request<double> request_get_record = {"Ap","double",10.7,10.4};
+    //Tdescriptor_request<double> request_get_record = {"Ap","double",10.7,10.4};
+    Tdescriptor_request<std::string> request_get_record = {"time","time","2023-10-27 14:00:00","2023-10-26 13:00:00"};
 
     request << "Get_record_from_table_PU " << "Test_counters_base " << "456798798744434 "
             << "0.0.98.1.0.255 " << request_get_record.to_json()<<std::endl;
     //std::cout << "1: " << request.str() <<std::endl;
-    auto answer = parser_join(request.str());
+    auto answer = parser_db_command(request.str());
     std::cout << answer << "\n";
 #endif
 #if 0

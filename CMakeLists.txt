@@ -60,6 +60,10 @@ set_target_properties( mapper_av mapper_ds reducer_av reducer_ds test_average te
 #)
 
 
+enable_language(CXX)
+set(CMAKE_CXX_STANDARD 23) # Устанавливаем C++20
+
+
 target_link_libraries(using_databse
     ${Boost_LIBRARIES}
 )
@@ -127,7 +131,7 @@ else ()
 
 
     target_compile_options(using_databse PRIVATE
-       -std=c++20 # -Wall -Wextra -pedantic #-Werror
+       -std=c++23 # -Wall -Wextra -pedantic #-Werror
     )
     target_compile_options(mapper_ds PRIVATE
         -Wall -Wextra -pedantic -Werror

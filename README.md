@@ -30,7 +30,7 @@
     Get_record_from_table_PU - получить данные из таблици
     
    Пример команды чтения показаний ПУ:
-   
+   Запрос по величине показаний
    Get_record_from_table_PU Test_counters_base 456798798744434 0.0.98.1.0.255 {"name_colon":"Ap","type_colon":"double","upper":1.07E1,"lower":1.05E1}
    
    
@@ -41,3 +41,15 @@
     456798798744434 - номер ПУ
     0.0.98.1.0.255 - таблица хранения
     {"name_colon":"Ap","type_colon":"double","upper":1.07E1,"lower":1.05E1} - join строка запроса.
+    
+   Запрос за период
+   
+   Get_record_from_table_PU Test_counters_base 456798798744434 0.0.98.1.0.255 {"name_colon":"time","type_colon":"time","upper":"2023-10-27 14:00:00","lower":"2023-10-26 13:00:00"}
+   
+   где
+   
+   Get_record_from_table_PU
+   Test_counters_base
+   456798798744434
+   0.0.98.1.0.255
+   {"name_colon":"time","type_colon":"time","upper":"2023-10-27 14:00:00","lower":"2023-10-26 13:00:00"}

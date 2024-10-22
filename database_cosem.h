@@ -16,6 +16,11 @@
 #include <boost/interprocess/file_mapping.hpp>
 #include <boost/interprocess/mapped_region.hpp>
 #include <functional>
+#include <ctime>
+#include <chrono>
+#include <sstream>
+#include <iomanip>
+
 struct counter{
     std::string number_counter;
 };
@@ -91,19 +96,38 @@ public:
     }
 };
 
-// class Ttime_join:public Tvalue{
-//     virtual Tvalue init(const boost::json::value&) const;
-//     bool operator ==(const Tvalue& other) const override;
-//     bool operator < (const Tvalue& other) const override;
-//     virtual void print();
-// };
+class Ttime_join:public Tvalue{
+    auto json_to_time(const boost::json::value &js) const{
+        const std::string dateTimeStr { js.get_string()};//"2023-10-26 14:00:00";
+        std::istringstream stream(dateTimeStr);
+        std::tm tm;
+        stream >> std::get_time(&tm, "%Y-%m-%d %H:%M:%S");
+        time_t time_t_value = std::mktime(&tm);
+        auto timePoint = std::chrono::system_clock::from_time_t(time_t_value);
+        return timePoint;
+    }
+public:
+    Ttime_join(boost::json::value js_):Tvalue(js_){}
+    bool operator ==(const Tvalue& other) const override{
+        return json_to_time(js) == json_to_time(other.js);
+    }
+    bool operator < (const Tvalue& other) const override{
+        return json_to_time(js) < json_to_time(other.js);
+    }
+    bool operator > (const Tvalue& other) const override{
+        return json_to_time(js) > json_to_time(other.js);
+    }
+    void print() const override {
+        std::cout << js.get_string() << std::endl;
+    }
+};
 
-// class timeFactory : public TvalueFactory {
-// public:
-//     std::unique_ptr<Tvalue> createValue() const override {
-//         return std::make_unique<Ttime_join>();
-//     }
-// };
+class timeFactory : public TvalueFactory {
+public:
+    std::unique_ptr<Tvalue> createValue(boost::json::value js_) const override {
+        return std::make_unique<Ttime_join>(js_);
+    }
+};
 
 class TvalueFactorySelector {
 private:
@@ -112,7 +136,7 @@ private:
 public:
     TvalueFactorySelector() {
         factories["double"] = std::make_unique<doubleFactory>();
-     //   factories["time"] = std::make_unique<timeFactory>();
+        factories["time"] = std::make_unique<timeFactory>();
     }
 
     std::unique_ptr<Tvalue> createValue(const std::string& type,boost::json::value js_) {
