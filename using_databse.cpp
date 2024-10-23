@@ -160,13 +160,13 @@ extern void hello_();
 extern int main_client_server(const unsigned short g_port_num_);
 int main(int argc, char* argv[]){
 
-#if 0
+#if 1
     if(argc == 1){return 0;}
     std::cout << "open port: " << argv[1] << " " <<std::endl;
     main_client_server(atoi(argv[1]));
 #endif
 
-#if 1
+#if 0
     std::stringstream  request;
 
     //Tdescriptor_request<double> request_get_record = {"Ap","double",10.7,10.4};
