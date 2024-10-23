@@ -95,6 +95,7 @@ struct Get_record_from_table_PU{
         for(const auto& str:v_ansver){
            answer << str << "\n";
         }
+
         return answer.str();
     }
 };
@@ -152,16 +153,20 @@ std::string parser_db_command(std::string cmd){
     return Comands.at(vk_str[0])(std::span<std::string> {vk_str.begin()+1,vk_str.end()});
 }
 
+#include "mapper_all.h"
+extern void hello_();
+
+//extern void procces_insaid_start (size_t number_threads, std::string vector_data );
 extern int main_client_server(const unsigned short g_port_num_);
 int main(int argc, char* argv[]){
 
-#if 1
+#if 0
     if(argc == 1){return 0;}
     std::cout << "open port: " << argv[1] << " " <<std::endl;
     main_client_server(atoi(argv[1]));
 #endif
 
-#if 0
+#if 1
     std::stringstream  request;
 
     //Tdescriptor_request<double> request_get_record = {"Ap","double",10.7,10.4};
@@ -172,6 +177,9 @@ int main(int argc, char* argv[]){
     //std::cout << "1: " << request.str() <<std::endl;
     auto answer = parser_db_command(request.str());
     std::cout << answer << "\n";
+
+    procces_insaid_start(3,answer);
+
 #endif
 #if 0
 

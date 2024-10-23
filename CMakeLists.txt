@@ -37,7 +37,8 @@ include_directories( "${PROJECT_SOURCE_DIR}/gurux/development/include" )
 
 #add_executable(test_bulk test_bulk.cpp)
 
-add_executable(using_databse using_databse.cpp)
+add_executable(using_databse using_databse.cpp mapper_all.h
+    average/mapper_av_code.cpp)
 
 target_link_libraries(using_databse data_base_cosem GuruxDLMS)
 

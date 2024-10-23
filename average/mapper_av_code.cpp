@@ -8,8 +8,8 @@ struct Thandler_mapper_awerage{
   size_t number_of_numbers;
   long long summ_of_numbers;
   Thandler_mapper_awerage():number_of_numbers{}, summ_of_numbers{}{}
-  void operator()(std::stringstream& strm){
-    double number; strm >> number;
+  void operator()(boost::json::value strm){
+    double number = strm.get_double();
     summ_of_numbers += static_cast<long long>(number*100);
     number_of_numbers++;
   }
@@ -19,16 +19,12 @@ struct Thandler_mapper_awerage{
 
 const size_t default_numbers_of_thread =5;
 
-int main(int argc, char ** argv)
-{
-    size_t number_threads = argc>1?atoi(argv[1]):default_numbers_of_thread;
-    auto v_hand_mapp_awerag = procces<T_string_queue,Thandler_mapper_awerage>(number_threads);
-
-    using namespace  std;
-
+void procces_insaid_start (size_t number_threads, std::string vector_data ){
+     std::stringstream strm (vector_data);
+     auto v_hand_mapp_awerag = procces_insaid<T_string_queue,Tthread_mapper_json<Thandler_mapper_awerage>>(number_threads,strm);
+//     auto v_hand_mapp_awerag = procces_insaid<T_string_queue,Thandler_mapper_awerage>(number_threads,vector_data);
     for(auto& m_handler_av: *v_hand_mapp_awerag){
-        cout << m_handler_av->get_handler().number_of_numbers << " "
-             << m_handler_av->get_handler().summ_of_numbers   << endl;
+        std::cout << m_handler_av->get_handler().number_of_numbers << " "
+             << m_handler_av->get_handler().summ_of_numbers   << std::endl;
     }
-    return 0;
 }

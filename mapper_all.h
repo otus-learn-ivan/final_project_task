@@ -71,4 +71,57 @@ procces(size_t number_threads){
     return  v_hand_mapp_awerag;
 }
 
+#include <boost/json.hpp>
+
+template <class Thandler>
+class Tthread_mapper_json{
+  Thandler handler_of_elm;
+  std::string num_colum;
+public:
+  Tthread_mapper_json(std::string num_colum ="Ap") :handler_of_elm{},num_colum{num_colum}{}
+  void operator()(std::unique_ptr<std::string> p_str){
+      // std::string sss (boost::json::parse(*p_str).at(num_colum).as_string());
+      // std::stringstream strm{sss };
+      // handler_of_elm(strm);
+      handler_of_elm(boost::json::parse(*p_str).at(num_colum));
+  }
+  Thandler& get_handler(){
+      return handler_of_elm;
+  }
+  std::function<void(std::unique_ptr<std::string>)> to_function() {
+             return [this](std::unique_ptr<std::string> p_str) {
+                 (*this)(std::move(p_str));
+             };
+         }
+};
+
+
+template<class Tqueue,class Tmapper>
+std::unique_ptr<std::vector<std::unique_ptr<Tmapper>>>
+procces_insaid (size_t& number_threads, std::istream& strm  ){
+//    procces_insaid (size_t& number_threads, std::stringstream& strm  ){
+    using Tthread = Tmapper;
+    using namespace  std;
+    auto qu_in = std::make_shared<Tqueue>();
+    std::unique_ptr<std::vector<std::unique_ptr<Tthread>>> v_hand_mapp_awerag =make_unique<std::vector<std::unique_ptr<Tthread>>>();
+    std::vector<std::jthread> threads;
+    for(size_t i=0;i<number_threads;i++){
+        v_hand_mapp_awerag->push_back(std::make_unique<Tthread>(Tthread{}));
+        threads.push_back(std::jthread(Tconsumer<string> {qu_in,(*v_hand_mapp_awerag)[i]->to_function()}));
+    }
+    string line;
+    while (std::getline(strm, line))
+    {
+        Tproducer<std::unique_ptr<string>>::Creator(qu_in).push(std::make_unique<string>(line));//.push(line);
+    }
+    for (auto& thread : threads) {
+        thread.request_stop();
+        if (thread.joinable()) {
+            thread.join();
+        }
+    }
+    return  v_hand_mapp_awerag;
+}
+void procces_insaid_start (size_t number_threads, std::string vector_data );
+
 #endif // MAPPER_ALL_H
